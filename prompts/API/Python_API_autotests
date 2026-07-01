@@ -4,47 +4,217 @@ Create simple and readable Python API autotests based on the existing Postman co
 
 Use:
 
-* Python
+* Python 3.8+
 * `pytest`
 * `requests`
 * `pytest-html`
-* `.env`
+* `python-dotenv`
+* `.env` for configuration
+* Logging module for structured logging
+
+## Core Requirements
 
 Cover:
 
 * Positive scenarios
-* Invalid authentication
+* Invalid authentication (missing, expired, invalid tokens)
 * Missing required fields
 * Invalid data types
 * Invalid parameters
-* Status code checks
-* Response body checks
-* Response time checks
+* Boundary and edge case values
+* Status code checks (2xx, 4xx, 5xx)
+* Response body checks and schema validation
+* Response time checks with SLA thresholds
 * CRUD flow, if supported
+* Concurrent request scenarios
+* Security test cases (injection attempts, authentication bypass)
+* Data persistence verification
 
-Requirements:
+Code Quality Requirements:
 
 * Simple and easy-to-understand code
-* No unnecessary complexity
-* Clear names and short English comments
+* No unnecessary complexity or over-engineering
+* Clear variable and function names
+* Short, concise English comments
+* DRY principle - reusable request builders and validators
 * Credentials and API settings stored in `.env`
+* Environment-specific configurations (dev, staging, prod)
 * Tests must run with the `pytest` command
+* Proper error handling and logging throughout
 
-Generate a new HTML report for every run.
+## Project Structure
 
-The report must include:
+```
+api-autotests/
+├── .env.example
+├── .env (gitignored)
+├── .gitignore
+├── pytest.ini
+├── requirements.txt
+├── README.md
+├── conftest.py
+├── config/
+│   ├── __init__.py
+│   ├── settings.py
+│   └── constants.py
+├── api/
+│   ├── __init__.py
+│   ├── client.py
+│   ├── endpoints.py
+│   └── validators.py
+├── utils/
+│   ├── __init__.py
+│   ├── logger.py
+│   ├── helpers.py
+│   └── data_builders.py
+├── tests/
+│   ├── __init__.py
+│   ├── test_authentication.py
+│   ├── test_crud_operations.py
+│   ├── test_validation.py
+│   ├── test_security.py
+│   ├── test_performance.py
+│   └── test_error_handling.py
+└── reports/
+    └── (auto-generated HTML reports with timestamp)
+```
 
-* Test result
-* Request method and URL
-* Request headers
+## HTML Report Requirements
+
+Generate a new HTML report for every test run with:
+
+* Test result (PASSED/FAILED/SKIPPED)
+* Request method and full URL
+* Request headers (mask sensitive data)
 * Request parameters
-* Request body
+* Request body (formatted JSON)
 * Response status code
 * Response headers
-* Response body
-* Response time
-* Assertion errors
+* Response body (formatted JSON)
+* Response time (milliseconds)
+* Assertion errors with detailed messages
+* Summary statistics (total tests, pass rate, failures)
+* Timeline/duration for each test
+* Environment and configuration info
 
-Save reports in the `reports` folder with date and time in the filename.
+Save reports in the `reports` folder with ISO 8601 timestamp and descriptive name in filename (e.g., `report_2026-07-01_14-30-45_staging.html`).
 
-Provide the full project structure, code for all files, installation steps, and run instructions.
+## Configuration (.env Template)
+
+```
+# API Configuration
+BASE_URL=https://api.example.com
+API_VERSION=v1
+ENVIRONMENT=staging
+
+# Authentication
+AUTH_TYPE=jwt  # Options: jwt, oauth, api_key, basic
+AUTH_TOKEN=your_token_here
+API_KEY=your_api_key_here
+USERNAME=test_user
+PASSWORD=test_password
+
+# Test Data
+TEST_USER_ID=123
+TEST_RESOURCE_ID=456
+
+# Performance Thresholds (milliseconds)
+RESPONSE_TIME_THRESHOLD_DEFAULT=2000
+RESPONSE_TIME_THRESHOLD_SLOW=5000
+TIMEOUT=30
+
+# Logging
+LOG_LEVEL=INFO
+LOG_FORMAT=json
+
+# Retry Configuration
+RETRY_ATTEMPTS=3
+RETRY_DELAY=1
+
+# Report Settings
+REPORT_FOLDER=reports
+REPORT_FORMAT=html
+CAPTURE_LOGS=true
+```
+
+## Additional Features
+
+Include:
+
+* **Pytest Fixtures**: Setup/teardown for test data, API client initialization, database cleanup
+* **Parametrized Tests**: Data-driven testing for multiple scenarios with @pytest.mark.parametrize
+* **Retry Logic**: Automatic retry for flaky tests with configurable attempts and delays
+* **Custom Assertions**: Reusable assertion helpers with descriptive error messages
+* **Request/Response Hooks**: Logging, performance tracking, and data capture
+* **Database Validation**: Optional queries to verify data persistence (if applicable)
+* **Performance Baselines**: Expected response time ranges per endpoint as SLA validation
+* **Concurrent Testing**: Tests for race conditions and simultaneous requests
+* **Error Scenarios**: Comprehensive coverage of error codes, stack traces, and validation messages
+* **Security Testing**: SQL injection, XSS attempts, IDOR/BOLA, privilege escalation, rate limiting
+
+## CI/CD Integration
+
+Include example configurations for:
+
+* GitHub Actions workflow
+* Test environment matrix (dev, staging, prod)
+* Automatic report generation and archival
+* Test result notifications
+* Failure alerts with logs attached
+
+## Documentation
+
+Provide:
+
+* Detailed README with project overview
+* Installation and setup instructions
+* How to run tests (all tests, specific test file, specific test)
+* How to run tests with specific markers (smoke, security, performance)
+* How to configure different environments
+* Troubleshooting guide for common issues
+* Example test output and report
+* How to extend tests with new endpoints
+* Best practices and coding standards
+* Handling different authentication types
+
+## Test Execution Commands
+
+Include examples:
+
+```bash
+# Run all tests
+pytest
+
+# Run with HTML report
+pytest --html=reports/report.html --self-contained-html
+
+# Run specific test file
+pytest tests/test_authentication.py -v
+
+# Run tests by marker
+pytest -m smoke
+pytest -m security
+
+# Run with coverage
+pytest --cov=api --cov-report=html
+
+# Parallel execution
+pytest -n auto
+
+# Verbose output with logging
+pytest -vv -s --log-cli-level=INFO
+```
+
+## Deliverables
+
+Provide:
+
+1. Full project structure as described above
+2. Complete source code for all modules and test files
+3. Installation instructions (pip requirements)
+4. Setup and run instructions
+5. Example .env.example file
+6. pytest.ini configuration file
+7. Sample HTML report output showing format
+8. GitHub Actions CI/CD workflow example (optional)
+9. README.md with comprehensive documentation
