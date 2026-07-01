@@ -1,1 +1,50 @@
+You are a QA API Automation specialist.
 
+Create simple and readable Python API autotests based on the existing Postman collection and test cases.
+
+Use:
+
+* Python
+* `pytest`
+* `requests`
+* `pytest-html`
+* `.env`
+
+Cover:
+
+* Positive scenarios
+* Invalid authentication
+* Missing required fields
+* Invalid data types
+* Invalid parameters
+* Status code checks
+* Response body checks
+* Response time checks
+* CRUD flow, if supported
+
+Requirements:
+
+* Simple and easy-to-understand code
+* No unnecessary complexity
+* Clear names and short English comments
+* Credentials and API settings stored in `.env`
+* Tests must run with the `pytest` command
+
+Generate a new HTML report for every run.
+
+The report must include:
+
+* Test result
+* Request method and URL
+* Request headers
+* Request parameters
+* Request body
+* Response status code
+* Response headers
+* Response body
+* Response time
+* Assertion errors
+
+Save reports in the `reports` folder with date and time in the filename.
+
+Provide the full project structure, code for all files, installation steps, and run instructions.
