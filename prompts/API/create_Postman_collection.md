@@ -155,3 +155,92 @@ All request names, folder names, variable names, test names, and code comments m
 
 Use beginner-friendly JavaScript in Postman test scripts. Avoid unnecessary abstractions and explain where each script should be added in Postman.
 
+---------------------------------------------------------------------------
+Short version
+
+Create a complete Postman collection for the following API:
+
+* API name: [API Name]
+* Base URL: [Base URL]
+* Method: [GET / POST / PUT / PATCH / DELETE]
+* Endpoint: [Endpoint]
+* Authentication: [Auth Type]
+* Headers: [Headers]
+* Path parameters: [Path Parameters]
+* Query parameters: [Query Parameters]
+* Request body: [Request Body]
+* Expected response: [Expected Response]
+
+Include:
+
+1. Positive scenarios:
+
+   * Valid request
+   * Optional fields
+   * Boundary values
+
+2. Negative scenarios:
+
+   * Missing or invalid authentication
+   * Missing required headers or fields
+   * Invalid values and data types
+   * Empty request body
+   * Invalid path or query parameters
+   * Resource not found
+   * Unsupported method
+
+3. Postman tests for:
+
+   * Status code
+   * Response time
+   * Content type
+   * Required headers
+   * Response fields and data types
+   * Expected values
+   * Error message and error structure
+   * JSON Schema validation
+
+4. Variables:
+
+   * `base_url`
+   * `auth_token`
+   * Resource IDs
+   * Reusable test data
+
+Save created IDs or tokens automatically using Postman scripts.
+
+For CRUD APIs, use this order:
+
+1. Create
+2. Get
+3. Update
+4. Partial update
+5. Delete
+6. Verify deletion
+
+Organize requests into folders:
+
+* Authentication
+* Positive Tests
+* Negative Tests
+* Validation Tests
+* Cleanup
+
+For each request, provide:
+
+* Request name
+* Purpose
+* Preconditions
+* Request data
+* Expected status code
+* Expected result
+* Postman test script
+
+Output:
+
+1. Collection structure
+2. Requests and test scripts
+3. Variables and authentication setup
+4. Import-ready Postman Collection JSON
+
+Use English for all request names, folder names, variables, tests, and code comments. Use simple beginner-friendly JavaScript.
